@@ -12,9 +12,6 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
-import org.andengine.input.sensor.acceleration.AccelerationData;
-import org.andengine.input.sensor.acceleration.IAccelerationListener;
-import org.andengine.input.touch.TouchEvent;
 import org.andengine.ui.activity.BaseGameActivity;
 
 import android.hardware.SensorManager;
@@ -25,17 +22,40 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 
-public class Box2DInitActivity extends BaseGameActivity implements IAccelerationListener, IOnSceneTouchListener{
-	private static int cameraWidth = 800;
-	private static int cameraHeight = 480;
-	private Scene mScene;
-	private FixedStepPhysicsWorld mPhysicsWorld;
+public class Box2DInitActivity extends BaseGameActivity {
+	protected static int cameraWidth = 800;
+	protected static int cameraHeight = 480;
+	protected Scene mScene;
+	protected FixedStepPhysicsWorld mPhysicsWorld;
 	//Wall bodies
 	private Body groundWallBody;
 	private Body roofWallBody;
 	private Body leftWallBody;
 	private Body rightWallBody;
-	
+	public static final short CATEGORYBIT_NO = 0;
+	public static final short CATEGORYBIT_WALL = 1;
+	public static final short CATEGORYBIT_BOX = 2;
+	public static final short CATEGORYBIT_CIRCLE = 4;
+	public static final short MASKBITS_WALL = CATEGORYBIT_WALL
+			+ CATEGORYBIT_BOX + CATEGORYBIT_CIRCLE;
+	public static final short MASKBITS_BOX = CATEGORYBIT_WALL + CATEGORYBIT_BOX; // Missing:
+	// CATEGORYBIT_CIRCLE
+	public static final short MASKBITS_CIRCLE = CATEGORYBIT_WALL
+			+ CATEGORYBIT_CIRCLE; // Missing: CATEGORYBIT_BOX
+	public static final short MASKBITS_NOTHING = 0; // Missing: all
+	public static final short MASKBITS_ONLY_WALL = CATEGORYBIT_WALL; // Missing:
+	public static final FixtureDef WALL_FIXTURE_DEF = PhysicsFactory.createFixtureDef(
+			0f, 0.5f, 0.8f, false, 
+			CATEGORYBIT_WALL, MASKBITS_WALL, 
+			(short) 0);
+	public static final FixtureDef NO_FIXTURE_DEF = PhysicsFactory.createFixtureDef(
+			1, 0.5f, 0.5f, false, 
+			CATEGORYBIT_NO,	MASKBITS_NOTHING, 
+			(short) 0);
+	public static final FixtureDef ONLY_WALL_FIXTURE_DEF = PhysicsFactory.createFixtureDef(
+			1, 0.2f, 1f, false, 
+			CATEGORYBIT_CIRCLE,	MASKBITS_ONLY_WALL, 
+			(short) -1);
 	@Override
 	public Engine onCreateEngine(EngineOptions pEngineOptions) {
 		//process 60 updates per second
@@ -52,7 +72,7 @@ public class Box2DInitActivity extends BaseGameActivity implements IAcceleration
 
 	@Override
 	public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) {
-		pOnCreateResourcesCallback.onCreateResourcesFinished();
+		//pOnCreateResourcesCallback.onCreateResourcesFinished();
 	}
 
 	@Override
@@ -69,7 +89,6 @@ public class Box2DInitActivity extends BaseGameActivity implements IAcceleration
 				false, 3,	2);
 		mScene.registerUpdateHandler(mPhysicsWorld);
 		//create wall
-		final FixtureDef WALL_FIXTURE_DEF = PhysicsFactory.createFixtureDef(0, 0.1f, 0.5f);
 		final Rectangle groundWall = new Rectangle(
 				cameraWidth / 2f, 6f,
 				cameraWidth - 4f, 8f,
@@ -115,19 +134,7 @@ public class Box2DInitActivity extends BaseGameActivity implements IAcceleration
 		mScene.attachChild(leftWall);
 		mScene.attachChild(rightWall);
 		
-		mScene.setOnSceneTouchListener(this);
-		pOnPopulateSceneCallback.onPopulateSceneFinished();
-	}
-
-	@Override
-	public void onAccelerationAccuracyChanged(AccelerationData pAccelerationData) {}
-
-	@Override
-	public void onAccelerationChanged(AccelerationData pAccelerationData) {}
-
-	@Override
-	public boolean onSceneTouchEvent(Scene arg0, TouchEvent arg1) {
-		return true;
+		//pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}
 
 }

@@ -10,6 +10,7 @@ import android.widget.Button;
 
 public class MainActivity extends Activity {
 	private Button btnBox2DInitActivity;
+	private Button btnWheelActivityButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,17 @@ public class MainActivity extends Activity {
 			}
 		});
 		
+		btnWheelActivityButton = (Button)findViewById(R.id.btnWheelActivity);
+		btnWheelActivityButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent();
+				intent.setClass(MainActivity.this, WheelActivity.class);
+				startActivity(intent);
+			}
+		});
 	}
 
 	@Override
