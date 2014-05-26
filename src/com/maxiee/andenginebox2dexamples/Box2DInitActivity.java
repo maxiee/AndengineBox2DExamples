@@ -12,6 +12,9 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
+import org.andengine.extension.physics.box2d.util.Vector2Pool;
+import org.andengine.input.sensor.acceleration.AccelerationData;
+import org.andengine.input.sensor.acceleration.IAccelerationListener;
 import org.andengine.ui.activity.BaseGameActivity;
 
 import android.hardware.SensorManager;
@@ -22,7 +25,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 
-public class Box2DInitActivity extends BaseGameActivity {
+public class Box2DInitActivity extends BaseGameActivity implements IAccelerationListener {
 	protected static int cameraWidth = 800;
 	protected static int cameraHeight = 480;
 	protected Scene mScene;
@@ -136,5 +139,29 @@ public class Box2DInitActivity extends BaseGameActivity {
 		
 		//pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}
+	
+	@Override
+	public void onAccelerationAccuracyChanged(AccelerationData pAccelerationData) {}
 
+	@Override
+	public void onAccelerationChanged(AccelerationData pAccelerationData) {
+		final Vector2 gravity = Vector2Pool.obtain(
+				pAccelerationData.getX()*2,
+				pAccelerationData.getY()*2);
+		this.mPhysicsWorld.setGravity(gravity);
+		Vector2Pool.recycle(gravity);
+	}
+	
+	@Override
+	public synchronized void onPauseGame() {
+		super.onPauseGame();
+		this.disableAccelerationSensor();
+	}
+
+	@Override
+	public synchronized void onResumeGame() {
+		super.onResumeGame();
+		this.enableAccelerationSensor(this);
+	}
+	
 }

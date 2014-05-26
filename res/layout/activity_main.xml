@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Box2DInitActivity: 初始化Andengine+Box2d，并在四周设置墙壁，其他Demo在此基础上进行拓展。" />
+        android:text="Box2DInitActivity: 初始化Andengine+Box2d，并在四周设置墙壁，其他Demo在此基础上进行拓展。\n目前直接进入此Activity会显示黑屏，只能通过其他Activity继承使用。" />
     
     <Button 
         android:id="@+id/btnWheelActivity"

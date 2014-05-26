@@ -18,7 +18,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 
-public class WheelActivity extends Box2DInitActivity implements IAccelerationListener{
+public class WheelActivity extends Box2DInitActivity {
 	private Body wheelBody;
 	private Sprite wheelFace;
 	private BitmapTextureAtlas carAtlas;
@@ -78,30 +78,6 @@ public class WheelActivity extends Box2DInitActivity implements IAccelerationLis
 		mWheelRev = (RevoluteJoint)mPhysicsWorld.createJoint(wheelRev);
 		
 		pOnPopulateSceneCallback.onPopulateSceneFinished();
-	}
-
-	@Override
-	public void onAccelerationAccuracyChanged(AccelerationData pAccelerationData) {}
-
-	@Override
-	public void onAccelerationChanged(AccelerationData pAccelerationData) {
-		final Vector2 gravity = Vector2Pool.obtain(
-				pAccelerationData.getX()*2,
-				pAccelerationData.getY()*2);
-		this.mPhysicsWorld.setGravity(gravity);
-		Vector2Pool.recycle(gravity);
-	}
-	
-	@Override
-	public synchronized void onPauseGame() {
-		super.onPauseGame();
-		this.disableAccelerationSensor();
-	}
-
-	@Override
-	public synchronized void onResumeGame() {
-		super.onResumeGame();
-		this.enableAccelerationSensor(this);
 	}
 
 }
