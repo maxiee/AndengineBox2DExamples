@@ -25,6 +25,8 @@
             android:name="com.maxiee.andenginebox2dexamples.Box2DInitActivity" />
         <activity
             android:name="com.maxiee.andenginebox2dexamples.WheelActivity" />
+        <activity
+            android:name="com.maxiee.andenginebox2dexamples.CarActivity" />
     </application>
 
 </manifest>

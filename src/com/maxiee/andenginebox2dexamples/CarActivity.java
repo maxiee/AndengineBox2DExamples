@@ -13,7 +13,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 
-public class WheelActivity extends Box2DInitActivity {
+public class CarActivity extends Box2DInitActivity {
 	private Body wheelBody;
 	private Sprite wheelFace;
 	private BitmapTextureAtlas carAtlas;
@@ -74,5 +74,4 @@ public class WheelActivity extends Box2DInitActivity {
 		
 		pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}
-
 }

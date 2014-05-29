@@ -24,5 +24,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="WheelActivity: 在Box2DInitActivity的基础上，在场景中放入一个车轮（图标暂且是Chrome...），并带有一定的动力。" />
+    
+    <Button 
+        android:id="@+id/btnCarActivity"
+        android:text="CarActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="WheelActivity: 在Box2DInitActivity的基础上，在场景中放入一辆车，并带有一定的动力。本里中的车轮，参考WheelActivity。" />
 
 </LinearLayout>
